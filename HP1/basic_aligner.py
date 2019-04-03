@@ -1,11 +1,12 @@
 import sys
 import os
+import argparse
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath("../.."))
 import numpy as np
 from os.path import join
 import time
-from CS_CM122.helpers import read_reads, read_reference, pretty_print_aligned_reads_with_ref
+from CM122_starter_code.helpers import read_reads, read_reference, pretty_print_aligned_reads_with_ref
 
 
 def trivial_algorithm(paired_end_reads, ref):
@@ -76,7 +77,12 @@ def trivial_algorithm(paired_end_reads, ref):
 
 
 if __name__ == "__main__":
-    data_folder = 'practice_W_1'
+    parser = argparse.ArgumentParser(description='basic_aligner.py takes in data for homework assignment 1 consisting '
+                                     'of a genome and a set of reads and aligns the reads to the reference genome.')
+    parser.add_argument('-d', '--dataFolder', required=True, dest='data_folder',
+                        help='Folder containing the data for HW1.')
+    args = parser.parse_args()
+    data_folder = args.data_folder
     print(data_folder)
     input_folder = join('../data/', data_folder)
     f_base = '{}_chr_1'.format(data_folder)
