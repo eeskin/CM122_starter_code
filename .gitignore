@@ -1,4 +1,6 @@
 *.pyc
-Exams/*
-Grading/*/*
 *.xlsx
+__pycache__/*
+__pycache__
+.idea/*
+.idea
