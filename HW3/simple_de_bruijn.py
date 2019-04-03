@@ -4,9 +4,10 @@ import time
 from collections import defaultdict, Counter
 import sys
 import os
+import zipfile
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath("../.."))
-from BIOINFO_M260B.helpers import read_reads
+from CS_CM122.helpers import read_reads
 
 
 def read_assembly_reads(read_fn):
@@ -78,18 +79,20 @@ def de_bruijn_reassemble(de_bruijn_graph):
 
 
 if __name__ == "__main__":
-    chr_name = 'hw3all_A_3_chr_1'
-    input_folder = './{}'.format(chr_name)
-    reads_fn = join(input_folder, 'reads_{}.txt'.format(chr_name))
+    data_file = 'spectrum_A_1'
+    chr_number = 'chr_1'
+    input_folder = '../data/{}'.format(data_file)
+    reads_fn = join(input_folder, 'reads_{}_{}.txt'.format(data_file, chr_number))
     reads = read_assembly_reads(reads_fn)
     db_graph = simple_de_bruijn(reads, 25)
-    for k in db_graph.keys()[:40]:
-        print k, db_graph[k]
 
     output = de_bruijn_reassemble(db_graph)
-    output_fn_end = 'assembled_{}.txt'.format(chr_name)
+    output_fn_end = 'assembled_{}_{}.txt'.format(data_file, chr_number)
     output_fn = join(input_folder, output_fn_end)
+    zip_fn = join(input_folder, 'assembled_{}_{}.zip'.format(data_file, chr_number))
     with open(output_fn, 'w') as output_file:
-        output_file.write('>' + chr_name + '\n')
+        output_file.write('>' + data_file + '_' + chr_number + '\n')
         output_file.write('>ASSEMBLY\n')
         output_file.write('\n'.join(output))
+    with zipfile.ZipFile(zip_fn, 'w') as myzip:
+        myzip.write(output_fn)

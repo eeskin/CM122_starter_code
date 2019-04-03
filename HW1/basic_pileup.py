@@ -3,6 +3,7 @@ import sys
 from os.path import join
 import zipfile
 
+
 def generate_consensus(aligned_fn):
     """
     :param aligned_fn: The filename of the saved output of the basic aligner
@@ -12,7 +13,7 @@ def generate_consensus(aligned_fn):
     with open(aligned_fn, 'r') as input_file:
         line_count = 0
         lines_to_process = []
-        SNPs = []
+        snps = []
         output_lines = []
         for line in input_file:
             line_count += 1
@@ -24,12 +25,12 @@ def generate_consensus(aligned_fn):
                                                                # with lines of all dashes '--------'
                 new_snps, new_output_lines = process_lines(lines_to_process)
                 lines_to_process = []
-                SNPs += new_snps
+                snps += new_snps
                 output_lines += new_output_lines
                 output_lines.append(line)
             else:
                 lines_to_process.append(line)
-        return SNPs, output_lines
+        return snps, output_lines
 
 
 def process_lines(genome_lines):
@@ -40,6 +41,7 @@ def process_lines(genome_lines):
              output_lines (the lines to print, given this set of lines)
     """
     line_count = 0
+    line_index = -1
     output_lines = []
     consensus_lines = []
     for line in genome_lines:
@@ -80,7 +82,7 @@ def consensus(ref, reads):
             # Spaces and dots (representing the distance between paired ends) do not count as DNA bases
         for base in read_bases:
             base_count[base] += 1
-        consensus_base = max(base_count.iterkeys(), key=(lambda key: base_count[key]))
+        consensus_base = max(base_count.keys(), key=(lambda key: base_count[key]))
             # The above line chooses (a) key with maximum value in the read_bases dictionary.
         consensus_string += consensus_base
     return consensus_string
@@ -106,7 +108,7 @@ def snp_calls(ref_string, consensus_string, start_index):
 
 
 if __name__ == "__main__":
-    data_folder = 'hw1_W_2'
+    data_folder = 'practice_W_1'
     input_folder = join('../data', data_folder)
     f_base = '{}_chr_1'.format(data_folder)
     input_fn = join(input_folder, 'aligned_{}.txt'.format(f_base))

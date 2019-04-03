@@ -5,13 +5,13 @@ sys.path.insert(0, os.path.abspath("../.."))
 import numpy as np
 from os.path import join
 import time
-from BIOINFO_M260B.helpers import read_reads, read_reference, pretty_print_aligned_reads_with_ref
+from CS_CM122.helpers import read_reads, read_reference, pretty_print_aligned_reads_with_ref
 
 
 def trivial_algorithm(paired_end_reads, ref):
     """
     This is a functional aligner, but it's a huge simplification that
-    generate a LOT of potential bugs.  It's also very slow.
+    generates a LOT of potential bugs.  It's also very slow.
 
     Read the spec carefully; consider how the paired-end reads are
     generated, and ideally, write your own algorithm
@@ -28,16 +28,15 @@ def trivial_algorithm(paired_end_reads, ref):
     all_read_alignment_locations = []
     output_read_pairs = []
     count = 0
-    start = time.clock()
     for read_pair in paired_end_reads:
         count += 1
         read_alignment_locations = []
         output_read_pair = []
         if count % 10 == 0:
-            time_passed = (time.clock()-start)/60
-            print '{} reads aligned'.format(count), 'in {:.3} minutes'.format(time_passed)
+            time_passed = (time.process_time())/60
+            print('{} reads aligned'.format(count), 'in {:.3} minutes'.format(time_passed))
             remaining_time = time_passed/count*(len(paired_end_reads)-count)
-            print 'Approximately {:.3} minutes remaining'.format(remaining_time)
+            print('Approximately {:.3} minutes remaining'.format(remaining_time))
         for read in read_pair:
             min_mismatches = len(read) + 1
             min_mismatch_location = -1
@@ -78,10 +77,10 @@ def trivial_algorithm(paired_end_reads, ref):
 
 if __name__ == "__main__":
     data_folder = 'practice_W_1'
+    print(data_folder)
     input_folder = join('../data/', data_folder)
     f_base = '{}_chr_1'.format(data_folder)
-    reads_fn = join(input_folder, 'reads_{}.txt'.format(f_base))
-    start = time.clock()
+    reads_fn = join(input_folder, 'reads_{}.txt').format(f_base)
     input_reads = read_reads(reads_fn)
     # This will take a while; you can use an array slice for example:
     #
@@ -89,12 +88,12 @@ if __name__ == "__main__":
     #
     # to generate some data quickly.
 
-    reference_fn = join(input_folder, 'ref_{}.txt'.format(f_base))
+    reference_fn = join(input_folder, 'ref_{}.txt').format(f_base)
     reference = read_reference(reference_fn)
     alignments, reads = trivial_algorithm(input_reads, reference)
-    print alignments
-    print reads
+    print(alignments)
+    print(reads)
     output_str = pretty_print_aligned_reads_with_ref(reads, alignments, reference)
-    output_fn = join(input_folder, 'aligned_{}.txt'.format(f_base))
+    output_fn = join(input_folder, 'aligned_{}.txt').format(f_base)
     with(open(output_fn, 'w')) as output_file:
         output_file.write(output_str)

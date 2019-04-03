@@ -1,12 +1,12 @@
 from collections import defaultdict, Counter
-import cPickle as pickle
+import pickle
 from os.path import join, exists, splitext
 import time
 import os
 import sys
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath("../.."))
-from BIOINFO_M260B.helpers import read_reads, read_reference, pretty_print_aligned_reads_with_ref
+from CS_CM122.helpers import read_reads, read_reference, pretty_print_aligned_reads_with_ref
 
 
 def hash_end(end, genome_ht):
@@ -18,9 +18,9 @@ def hash_end(end, genome_ht):
     :param genome_ht: A hash of the genome with uniform key length
     :return:
     """
-    key_length = len(genome_ht.keys()[0])
+    key_length = max(map(len, genome_ht))
     end_pieces = [end[i * key_length: (i + 1) * key_length]
-                  for i in range(len(end) / key_length)]
+                  for i in range(len(end) // key_length)]
 
     hashed_read_locations = [genome_ht[read_piece]
                              for read_piece in end_pieces]
@@ -87,7 +87,7 @@ def build_hash_and_pickle(ref_fn, key_length, force_rebuild=False):
     reference_hash_pkl_fn = '{}_hash_keylength_{}.pkl'.format(splitext(ref_fn)[0], key_length)
     if exists(reference_hash_pkl_fn) and not force_rebuild:
         ref_genome_hash = pickle.load(open(reference_hash_pkl_fn, 'rb'))
-        if len(ref_genome_hash.keys()[0]) == key_length:
+        if max(map(len, ref_genome_hash)) == key_length:
             return ref_genome_hash
         else:
             pass
@@ -109,7 +109,6 @@ def hashing_algorithm(paired_end_reads, genome_ht):
     alignments = []
     genome_aligned_reads = []
     count = 0
-    start = time.clock()
 
     for read in paired_end_reads:
         alignment, genome_aligned_read = hash_read(read, genome_ht)
@@ -117,10 +116,10 @@ def hashing_algorithm(paired_end_reads, genome_ht):
         genome_aligned_reads.append(genome_aligned_read)
         count += 1
         if count % 100 == 0:
-            time_passed = (time.clock()-start)/60
-            print '{} reads aligned'.format(count), 'in {:.3} minutes'.format(time_passed)
+            time_passed = (time.process_time())/60
+            print('{} reads aligned'.format(count), 'in {:.3} minutes'.format(time_passed))
             remaining_time = time_passed/count*(len(paired_end_reads)-count)
-            print 'Approximately {:.3} minutes remaining'.format(remaining_time)
+            print('Approximately {:.3} minutes remaining'.format(remaining_time))
     return alignments, genome_aligned_reads
 
 if __name__ == "__main__":
@@ -132,7 +131,6 @@ if __name__ == "__main__":
     ref_fn_end = 'ref_{}.txt'.format(chr_name)
     ref_fn = join(input_folder, ref_fn_end)
     key_length = 7
-    start = time.clock()
     reads = read_reads(reads_fn)
     # If you want to speed it up, cut down the number of reads by
     # changing the line to reads = read_reads(reads_fn)[:<x>] where <x>
@@ -140,7 +138,7 @@ if __name__ == "__main__":
     genome_hash_table = build_hash_and_pickle(ref_fn, key_length)
     ref = read_reference(ref_fn)
     genome_aligned_reads, alignments = hashing_algorithm(reads, genome_hash_table)
-    # print genome_aligned_reads
-    # print alignments
     output_str = pretty_print_aligned_reads_with_ref(genome_aligned_reads, alignments, ref)
-    print output_str[:5000]
+    output_fn = join(input_folder, 'aligned_{}.txt'.format(chr_name))
+    with(open(output_fn, 'w')) as output_file:
+        output_file.write(output_str)

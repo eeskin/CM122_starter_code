@@ -3,11 +3,13 @@ import numpy as np
 from collections import defaultdict
 import time
 from os.path import join
+from itertools import chain
 from basic_hasher import build_hash_and_pickle, hashing_algorithm
 import os
+import zipfile
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath("../.."))
-from BIOINFO_M260B.helpers import *
+from CS_CM122.helpers import *
 
 READ_LENGTH = 50
 
@@ -21,7 +23,6 @@ def generate_pileup(aligned_fn):
     line_count = 0
     lines_to_process = []
     changes = []
-    start = time.clock()
     with open(aligned_fn, 'r') as input_file:
         for line in input_file:
             line_count += 1
@@ -50,6 +51,7 @@ def process_lines(genome_lines):
              output_lines (the lines to print, given this set of lines)
     """
     line_count = 0
+    line_index = -1
     consensus_lines = []
     for line in genome_lines:
         line_count += 1
@@ -84,7 +86,8 @@ def align_to_donor(donor, read):
         best_read = read
         best_score = score
 
-    for shift_amount in range(-3, 0) + range(1, 4):  # This can be improved
+    shifted_read = ''
+    for shift_amount in chain(range(-3, 0), range(1, 4)):  # This can be improved
         if shift_amount > 0:
             shifted_read = ' ' * shift_amount + read
         elif shift_amount < 0:
@@ -192,7 +195,7 @@ def identify_changes(ref, donor, offset):
     ref = '${}'.format(ref)
     donor = '${}'.format(donor)
     edit_matrix = edit_distance_matrix(ref=ref, donor=donor)
-    print edit_matrix
+    print(edit_matrix)
     current_row = len(ref) - 1
     current_column = len(donor) - 1
     changes = []
@@ -256,7 +259,7 @@ def identify_changes(ref, donor, offset):
         else:
             raise ValueError
     changes = sorted(changes, key=lambda change: change[-1])
-    print str(changes)
+    print(str(changes))
     return changes
 
 
@@ -279,7 +282,7 @@ def consensus(ref, aligned_reads):
         # Spaces and dots (representing the distance between paired ends) do not count as DNA bases
         for base in read_bases:
             base_count[base] += 1
-        consensus_base = max(base_count.iterkeys(), key=(lambda key: base_count[key]))
+        consensus_base = max(base_count.keys(), key=(lambda key: base_count[key]))
         # The above line chooses (a) key with maximum value in the read_bases dictionary.
         consensus_string += consensus_base
     return consensus_string
@@ -298,17 +301,17 @@ if __name__ == "__main__":
     # identify_changes(ref='TTACCGTGCAAGCG', donor='GCACCCAAGTTCG', offset=0)
     # ### /Testing Code
     #
-    genome_name = 'hw2undergrad_E_2'
-    input_folder = './PA2/{}'.format(genome_name)
+    genome_name = 'practice_W_1'
+    input_folder = '../data/{}'.format(genome_name)
     chr_name = '{}_chr_1'.format(genome_name)
     reads_fn_end = 'reads_{}.txt'.format(chr_name)
     reads_fn = join(input_folder, reads_fn_end)
     ref_fn_end = 'ref_{}.txt'.format(chr_name)
     ref_fn = join(input_folder, ref_fn_end)
-    start = time.clock()
-    input_fn = join(input_folder, 'aligned_reads_{}.txt'.format(chr_name))
+    input_fn = join(input_folder, 'aligned_{}.txt'.format(chr_name))
     snps, insertions, deletions = generate_pileup(input_fn)
     output_fn = join(input_folder, 'changes_{}.txt'.format(chr_name))
+    zip_fn = join(input_folder, 'changes_{}.zip'.format(chr_name))
     with open(output_fn, 'w') as output_file:
         output_file.write('>' + chr_name + '\n>SNP\n')
         for x in snps:
@@ -319,3 +322,5 @@ if __name__ == "__main__":
         output_file.write('>DEL\n')
         for x in deletions:
             output_file.write(','.join([str(u) for u in x[1:]]) + '\n')
+    with zipfile.ZipFile(zip_fn, 'w') as myzip:
+        myzip.write(output_fn)
