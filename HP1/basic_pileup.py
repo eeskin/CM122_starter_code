@@ -2,7 +2,7 @@ from collections import defaultdict
 import sys
 from os.path import join
 import zipfile
-
+import argparse
 
 def generate_consensus(aligned_fn):
     """
@@ -108,15 +108,28 @@ def snp_calls(ref_string, consensus_string, start_index):
 
 
 if __name__ == "__main__":
-    data_folder = 'practice_W_1'
-    input_folder = join('../data', data_folder)
-    f_base = '{}_chr_1'.format(data_folder)
-    input_fn = join(input_folder, 'aligned_{}.txt'.format(f_base))
+    parser = argparse.ArgumentParser(description='basic_pileup.py takes in a file containing reads aligned to a '
+                                                 'reference genome by basic_aligner.py to a reference genome and '
+                                                 'calls variants from them (currently just SNPs). The output from this '
+                                                 'script can be submitted on the https://cm124.herokuapp.com/ website.')
+    parser.add_argument('-a', '--alignedFile', required=True, dest='aligned_file',
+                        help='File outputted by basic_aligner.py containing reads aligned to a reference genome.')
+    parser.add_argument('-o', '--outputFile', required=True, dest='output_file',
+                        help='Output file to write the called variants to. This script will also create a zipped '
+                        'version of this file that you can submit on the course website.')
+    parser.add_argument('-t', '--outputHeader', required=True, dest='output_header',
+                        help='String that needs to be outputted on the first line of the output file so that the '
+                             'online submission system recognizes which leaderboard this file should be submitted to.'
+                             'This HAS to be practice_W_1_chr_1 for the practice data and hw1_W_2_chr_1 for the '
+                             'for-credit assignment!')
+
+    args = parser.parse_args()
+    input_fn = args.aligned_file
     snps, lines = generate_consensus(input_fn)
-    output_fn = join(input_folder, 'snps_{}.txt'.format(f_base))
-    zip_fn = join(input_folder, 'snps_{}.zip'.format(f_base))
+    output_fn = args.output_file
+    zip_fn = output_fn + '.zip'
     with open(output_fn, 'w') as output_file:
-        header = '>{}\n>{}\n'.format(f_base, 'SNP')
+        header = '>' + args.output_header + '\n>SNP\n'
         output_file.write(header)
         for x in snps:
             line = ','.join([str(u) for u in x]) + '\n'
@@ -128,6 +141,3 @@ if __name__ == "__main__":
     with zipfile.ZipFile(zip_fn, 'w') as myzip:
         myzip.write(output_fn)
 
-    output_fn2 = join(input_folder, 'consensus_{}.txt'.format(f_base))
-    output_file2 = open(output_fn2, 'w')
-    output_file2.write('\n'.join(lines))

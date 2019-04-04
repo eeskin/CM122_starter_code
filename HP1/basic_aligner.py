@@ -79,14 +79,17 @@ def trivial_algorithm(paired_end_reads, ref):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='basic_aligner.py takes in data for homework assignment 1 consisting '
                                      'of a genome and a set of reads and aligns the reads to the reference genome.')
-    parser.add_argument('-d', '--dataFolder', required=True, dest='data_folder',
-                        help='Folder containing the data for HW1.')
+    parser.add_argument('-g', '--referenceGenome', required=True, dest='reference_file',
+                        help='File containing a reference genome.')
+    parser.add_argument('-r', '--reads', required=True, dest='reads_file',
+                        help='File containg sequencing reads.')
+    parser.add_argument('-o', '--outputFile', required=True, dest='output_file',
+                        help='Output file name.')
     args = parser.parse_args()
-    data_folder = args.data_folder
-    print(data_folder)
-    input_folder = join('../data/', data_folder)
-    f_base = '{}_chr_1'.format(data_folder)
-    reads_fn = join(input_folder, 'reads_{}.txt').format(f_base)
+    reference_fn = args.reference_file
+    reads_fn = args.reads_file
+    output_fn = args.output_file
+
     input_reads = read_reads(reads_fn)
     # This will take a while; you can use an array slice for example:
     #
@@ -94,12 +97,9 @@ if __name__ == "__main__":
     #
     # to generate some data quickly.
 
-    reference_fn = join(input_folder, 'ref_{}.txt').format(f_base)
     reference = read_reference(reference_fn)
     alignments, reads = trivial_algorithm(input_reads, reference)
-    print(alignments)
-    print(reads)
+
     output_str = pretty_print_aligned_reads_with_ref(reads, alignments, reference)
-    output_fn = join(input_folder, 'aligned_{}.txt').format(f_base)
     with(open(output_fn, 'w')) as output_file:
         output_file.write(output_str)
