@@ -16,9 +16,11 @@ In the first two programming assignments for this class, you will solve the comp
 
 You are given a reference genome in FASTA format, and paired-end reads.
 
-The first line of each file indicates which project that the data relates to. In the reference file, the genome is written in order, 80 bases (A's, C's, G's, and T's) per line.
+The first line of each file indicates which project the data relates to. In the reference file, the genome is written in order, 80 bases (A's, C's, G's, and T's) per line.
 
 The paired end reads are generated from the unknown donor sequence, and 10 percent of the reads are generated randomly to mimic contamination with another genetic source. These reads are formatted as two 50 bp-long ends, which are separated by a 90-110 bp-long separator. 
+
+Your task is to map the reads to the reference genome and then determine where the reads indicate there is a difference (a variant). The different kinds of variants that may be found in the donor genome are explained at https://cm124.herokuapp.com/variant_doc
 
 ### Starter Code
 
@@ -30,13 +32,15 @@ This will create a folder named CM122_starter_code in your current directory.
 
 ## Dependencies
 
-The starter code uses the `numpy` library, which can be installed in your local environment using
+The starter code for project 1uses the `numpy` library, which can be installed in your local environment using
 ```
 conda install numpy
 ```
 
 ## Tutorial
-You should download the practice and "for-credit" data from https://cm124.herokuapp.com/h1_data_files. If you want to follow the tutorial below, download and extract these files into the HP1 folder. This is done below via comand line.
+The starter code provided first aligns the paired end reads to the reference genome using `basic_aligner.py` and then calls SNPs using `basic_pileup.py`. Bear in mind that while this code works ok for the practice data set, it may not work so well for the real data.
+
+You should download the practice and "for-credit" data from https://cm124.herokuapp.com/h1_data_files. If you want to follow the tutorial below, download and extract these files into the HP1 folder. Via command line that would look like this:
 ```
 cd CM122_starter_code
 cd HP1
