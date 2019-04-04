@@ -50,6 +50,8 @@ unzip practice_W_1.zip
 unzip hw_1_W_2.zip
 ```
 
+Obviously, you can just also open the browser and download and unzip the files using your file manager.
+
 There are two scripts to look at:
 1. `basic_aligner.py` takes in a reference genome, a set of reads and an output file and outputs the reads aligned to the reference genome into the output file
 2. `basic_pileup.py` takes in aligned reads and an output file and outputs the SNPs called based on the aligned reads.
@@ -69,6 +71,7 @@ python basic_pileup.py -a test_aligner.txt -o test_pileup.txt -t practice_W_1_ch
 
 This will generate the file test_pile_up.txt.zip that you can submit on the website. It also generates a .txt file that you can look at. **Note that the -t parameter HAS to be practice_W_1_chr_1 when submitting the practice data and hw1_W_2_chr_1 when submitting the real assignment. This will let the online submission system know on which leaderboard to place you.**
 
+__Windows Users__ : Command line on Windows is a little tricky. There are several ways you can run the commands above, but probably the simplest one is to use the Anaconda prompt that came with your Anaconda installation. Another option is to set command line parameters using PyCharm: https://stackoverflow.com/questions/33102272/pycharm-and-sys-argv-arguments. Yet another option is to go into the code and hardcode the file names you want to use and remove the section that takes in command line arguments so you can run the code in Pycharm without adding any command line arguments. This last option is unfortunate and I hope you don't resort to it.
 
 Read the content of HP1, and see if you can understand what it is doing. You can submit your results as many times as you want to achieve a passing score.
 
