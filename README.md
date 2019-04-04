@@ -22,4 +22,4 @@ conda activate CM122
 
 You can then use `conda install package_name` to install any package you might need. The description of each project will mention if you need to install any packages for that project.
 
-For Windows users and those who are generally adverse to using the command-line, you don't __really__ need to have a separate environment for this project, but if you wish to do it, you can manage virtual environments using PyCharm as well.
+For Windows users and those who are generally adverse to using the command-line, you don't __really__ need to have a separate environment for this project, but if you wish to do it, you can manage virtual environments using PyCharm as well: https://www.jetbrains.com/help/pycharm/creating-virtual-environment.html or you should be able to run the commands above using the Anaconda prompt that came with your Anaconda installation.
