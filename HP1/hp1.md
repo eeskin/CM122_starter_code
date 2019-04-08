@@ -7,7 +7,7 @@ output:
 
 ## BIOINFO M122/M222
 
-### Due: Tuesday April 11th, 2019, 11:59 pm
+### Due: Thursday April 11th, 2019, 11:59 pm
 
 This short programming assignment is designed to help you get an understanding for the basics of sequence alignment. You can use any language for this project, but Python is strongly recommended, and you will receive starter code in Python. You will submit your response to https://cm124.herokuapp.com/upload as a `.zip` file.
 
