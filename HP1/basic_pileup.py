@@ -104,6 +104,7 @@ def snp_calls(ref_string, consensus_string, start_index):
     for i in range(len(ref_string)):
         if ref_string[i] != consensus_string[i]:
             snps.append([ref_string[i], consensus_string[i], start_index + i])
+
     return snps
 
 
