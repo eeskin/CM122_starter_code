@@ -80,13 +80,10 @@ Project 2B is the exact same problem as project 2A, except now the size of the g
 
 ### Grading
 
-#### HP1
 | SNP Score | No Credit | Full Credit |
 |-----------|-----------|-------------|
 | Undergrad | 55        | 75          |
 | Grad      | 70        | 90          |
-
-#### HP2
 
 | Indel Score | No Credit | Full Credit |
 |-------------|-----------|-------------|
