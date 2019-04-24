@@ -8,7 +8,7 @@ output:
 
 ## BIOINFO M122/M222
 
-### Due: Friday May 10th, 2019, 11:59 pm
+### Due: Sunday May 12th, 2019, 11:59 pm
 
 This programming assignment is designed to teach you about sequence assembly.
 

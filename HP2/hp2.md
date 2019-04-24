@@ -74,7 +74,7 @@ Chapter 5 in the textbook also goes over these ideas.
 
 ## BIOINFO M122/M222
 
-### Due: Sunday April 28th, 2019, 11:59 pm
+### Due: Sunday May 5th, 2019, 11:59 pm
 
 Project 2B is the exact same problem as project 2A, except now the size of the genome is length 100 million. This makes the hashing approach in `basic_hasher.py` very memory intensive, so you will have to make changes to this script in addition to the changes you made to `complex_pileup.py` for project 2A. You may want to consider using Burrows Wheeler Transform to be able to handle this size of genome. You should also consider that this project may take a long time to run even with a relatively efficient algorithm, so make sure to get started early! 
 
