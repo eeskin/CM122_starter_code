@@ -5,7 +5,11 @@ def read_reads(read_fn):
     f = open(read_fn, 'r')
     first_line = True
     all_reads = []
+    count = 0
     for line in f:
+        count += 1
+        if count % 1000 == 0:
+            print(count, " reads done.")
         if first_line:
             first_line = False
             continue  # We skip the first line, since it

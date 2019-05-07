@@ -41,3 +41,13 @@ The de Bruijn graph using a spectrum of size _k_ is by taking each read, and dra
 ### Other Assembly Algorithms
 
 There are other assembly algorithms (for example, an O(N^2^) greedy algorithm) that only work in easy cases. As this is an easy case, this algorithm will work (and in fact, it will likely work better than the deBruijn graph algorithm you are given starter code for), but it is not necessary to implement this algorithm to achieve a full-credit score.
+
+### Grading
+
+To obtain full credit you must obtain the following thresholds.
+
+|           | Coverage | Accuracy | Contig Size |
+|-----------|----------|----------|-------------|
+| Undergrad | 87       | 43       | 5           |
+| Grad      | 92       | 48       | 8           |
+|           |          |          |             |

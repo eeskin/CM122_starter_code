@@ -180,6 +180,9 @@ def edit_distance_matrix(ref, donor):
     return output_matrix
 
 
+
+
+
 def identify_changes(ref, donor, offset):
     """
     Performs a backtrace-based re-alignment of the donor to the reference and identifies
@@ -215,6 +218,7 @@ def identify_changes(ref, donor, offset):
             insertion_dist = edit_matrix[current_row, pvs_column]
         except IndexError:
             insertion_dist = np.inf
+
 
         try:
             deletion_dist = edit_matrix[pvs_row, current_column]

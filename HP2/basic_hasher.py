@@ -78,7 +78,11 @@ def make_genome_hash(reference, key_length):
     :return:
     """
     genome_hash = defaultdict(list)
+    count = 0
     for i in range(len(reference) - key_length):
+        count += 1
+        if count % 1000 == 0:
+            print(i, "/", len(reference))
         ref_piece = reference[i: i + key_length]
         genome_hash[ref_piece].append(i)
     return genome_hash
@@ -94,8 +98,12 @@ def build_hash_and_pickle(ref_fn, key_length, force_rebuild=False):
             pass
     else:
         pass
+    print("Reading reference . . .")
     reference = read_reference(ref_fn)
+    print("Done.")
+    print("Hashing genome . . .")
     ref_genome_hash = make_genome_hash(reference, key_length)
+    print("Done.")
     pickle.dump(ref_genome_hash, open(reference_hash_pkl_fn, 'wb'))
     return ref_genome_hash
 
@@ -139,10 +147,13 @@ if __name__ == "__main__":
     output_fn = args.output_file
 
     key_length = 7
+    print("Reading reads . . .")
     reads = read_reads(reads_fn)
+    print("Done.")
     # If you want to speed it up, cut down the number of reads by
     # changing the line to reads = read_reads(reads_fn)[:<x>] where <x>
     # is the number of reads you want to work with.
+    print("Hashing genome . . .")
     genome_hash_table = build_hash_and_pickle(reference_fn, key_length)
     ref = read_reference(reference_fn)
     genome_aligned_reads, alignments = hashing_algorithm(reads, genome_hash_table)
