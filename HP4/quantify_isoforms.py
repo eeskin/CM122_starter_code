@@ -86,7 +86,7 @@ if __name__ == "__main__":
     """
     For an example of how you might call this script to run on the data provided:
     
-    Usage: python proj4.py -g full_genome.txt -r shuffled_reads.txt -a DATA_PA_1100_0 -o test.out -t hw4_r_4_chr1
+    Usage: python proj4.py -g full_genome.txt -r shuffled_reads.txt -a DATA_PA_1100_0 -o test.out -t hw4_r_4_chr_1
     """
     parser = argparse.ArgumentParser(description='For now this starter code helps parse the files given, but leaves\n'
                                                  'the actual function that must be implemented empty')
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', '--outputHeader', required=True, dest='output_header',
                         help='String that needs to be output on the first line of the output file so that the online\n'
                              'submission system recognizes which leaderboard this file should be submitted to. For\n'
-                             'hw4, this will be hw4_r_4_chr1')
+                             'hw4, this will be hw4_r_4_chr_1')
 
     args = parser.parse_args()
     genome_fn = args.genome_file
