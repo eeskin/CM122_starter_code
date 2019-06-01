@@ -45,9 +45,12 @@ def parse_reads_file(reads_fn):
     :param reads_fn: the file of shuffled reads
     :return: a list containing all of the shuffled reads
     """
-
+    
+    out_reads = []
     with open(reads_fn, 'r') as rFile:
-        return rFile.readlines()
+        for line in rFile:
+            out_reads.append(line.strip())
+    return out_reads
 
 
 def quantify_isoforms(genes, genome, reads):
