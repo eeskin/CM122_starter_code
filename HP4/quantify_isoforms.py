@@ -67,8 +67,8 @@ def quantify_isoforms(genes, genome, reads):
     """
 
     """
-        Within this function, you should go through most of the process of quantifying isoforms given the data.
-        This can be broken down into the following few steps:
+        TODO: Within this function, you should go through most of the process of quantifying isoforms given the data.
+            This can be broken down into the following few steps:
         
             1. Align reads to the genome, exome, or isoforms
                     your choice of method, but note the length of the genome
