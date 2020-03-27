@@ -31,11 +31,31 @@ def parse_reads_file(reads_fn):
         return None
 
 
+def parse_ref_file(ref_fn):
+    """
+    :param ref_fn: the file containing the reference genome
+    :return: a string containing the reference genome
+    """
+    try:
+        with open(ref_fn, 'r') as gFile:
+            print("Parsing Ref")
+            first_line = True
+            ref_genome = ''
+            for line in gFile:
+                if first_line:
+                    first_line = False
+                    continue
+                ref_genome += line.strip()
+        return ref_genome
+    except IOError:
+        print("Could not read file: ", ref_fn)
+        return None
+
+
 """
     TODO: Use this space to implement any additional functions you might need
-    
-"""
 
+"""
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='basic_aligner.py takes in data for homework assignment 1 consisting '
