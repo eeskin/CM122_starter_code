@@ -86,6 +86,7 @@ if __name__ == "__main__":
         TODO: Add functions to do the actual read alignment here
         
     """
+    snps = [['A', 'G', 3425]]
 
     output_fn = args.output_file
     zip_fn = output_fn + '.zip'

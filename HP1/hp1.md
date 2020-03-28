@@ -31,7 +31,7 @@ This will create a folder named CM122_starter_code in your current directory.
 
 ## Dependencies
 
-The starter code for project 1uses the `numpy` library, which can be installed in your local environment using
+The starter code for project 1 uses the `numpy` library, which can be installed in your local environment using
 ```
 conda install numpy
 ```
