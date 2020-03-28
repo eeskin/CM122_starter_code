@@ -29,9 +29,9 @@ Starter code for the project has been pushed to the Github repository at https:/
 The starter code provided handles reading the reads and reference genome into Python lists, as well as converting a list of SNPs into the proper output format. You will be responsible for aligning the reads to the reference, and calling SNPs.
 
 We are providing you with the skeleton for one script:
-1. `basic_hasher.py` takes in a reference genome, a set of reads and an output file and outputs the SNPs and indels called based on the aligned reads.
+1. `basic_hasher.py` takes in a reference genome, a set of reads an output file and an output header and outputs the SNPs and indels called based on the aligned reads.
 
-Running each of the above scripts with the `-h` option should be self explanatory, but here is an example of running them to create a file that can be submitted on the website for the 10K length genome practice data provided for project 2.
+Running the above scripts with the `-h` option should be self explanatory, but here is an example of running them to create a file that can be submitted on the website for the 10K length genome practice data provided for project 2.
 
 1. Download the 10K practice data from https://cm124.herokuapp.com/h2_data_files into the HP2 folder and unzip it. The commands below assume that you have a folder named practice_E_1 in the HP2 folder. If you download and save things in a different place you'll have to adjust the file paths below.
 

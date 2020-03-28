@@ -61,7 +61,8 @@ def parse_ref_file(ref_fn):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='basic_hasher.py takes in data for homework assignment 2 consisting '
-                                     'of a genome and a set of reads and aligns the reads to the reference genome.')
+                                     'of a genome and a set of reads and aligns the reads to the reference genome, '
+                                     'then calls SNPS and indels based on this alignment.')
     parser.add_argument('-g', '--referenceGenome', required=True, dest='reference_file',
                         help='File containing a reference genome.')
     parser.add_argument('-r', '--reads', required=True, dest='reads_file',
@@ -74,8 +75,8 @@ if __name__ == "__main__":
                              'This HAS to be one of the following:\n'
                              '1) practice_W_3_chr_1 for 10K length genome practice data\n'
                              '2) practice_E_1_chr_1 for 1 million length genome practice data\n'
-                             '3) hw2undergrad_E_2_chr_1 for project 2A for-credit data\n'
-                             '4) hw2grad_M_1_chr_1 for project 2B for-credit data\n')
+                             '3) hw2undergrad_E_2_chr_1 for project 2 undergrad for-credit data\n'
+                             '4) hw2grad_M_1_chr_1 for project 2 grad for-credit data\n')
     args = parser.parse_args()
     reference_fn = args.reference_file
     reads_fn = args.reads_file
@@ -88,7 +89,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     """
-        TODO: Add functions to do the actual read alignment here
+        TODO: Call functions to do the actual read alignment here
 
     """
     snps = [['A', 'G', 3425]]
